@@ -90,8 +90,8 @@
 .route-page{outline:none;transform-origin:50% 25vh}
 .route-page.leaving{animation:page-depart .38s ease-in both;pointer-events:none}
 .route-page.entering{animation:page-arrive .67s cubic-bezier(.16,1,.3,1) both}
-@keyframes page-depart{from{opacity:1;filter:blur(0);transform:perspective(1500px) translateZ(0) rotateY(0)}to{opacity:.2;filter:blur(7px);transform:perspective(1500px) translateZ(-120px) rotateY(-5deg)}}
-@keyframes page-arrive{from{opacity:.2;filter:blur(10px);transform:perspective(1500px) translateZ(-120px) rotateY(5deg)}to{opacity:1;filter:blur(0);transform:none}}
+@keyframes page-depart{from{opacity:1}to{opacity:.2}}
+@keyframes page-arrive{from{opacity:.2}to{opacity:1}}
 .page-shutter{position:fixed;inset:-5px;z-index:100;display:grid;grid-template-columns:repeat(5,1fr);pointer-events:none;perspective:1000px;overflow:hidden;visibility:hidden}
 .page-shutter i{display:block;height:100%;background:linear-gradient(100deg,#32252e,#17141b 70%,#eaa0b322);border-right:1px solid #ec92a54a;transform-origin:left center;transform:translateY(110%) rotateY(-60deg);will-change:transform}
 .page-shutter.leaving,.page-shutter.entering{visibility:visible;pointer-events:auto}
@@ -328,8 +328,8 @@ footer a{transition:color .4s var(--ease-out)}footer a:hover{color:var(--pink)}
 .initial-load .home-profile-facts>div{animation:profile-fact-enter 1.05s .65s var(--ease-out) both;transform-origin:50% 100%}
 .initial-load .home-profile-facts>div:nth-child(2){animation-delay:.77s}.initial-load .home-profile-facts>div:nth-child(3){animation-delay:.89s}.initial-load .home-profile-facts>div:nth-child(4){animation-delay:1.01s}
 @keyframes profile-fact-enter{from{opacity:0;transform:translateY(45px) rotateX(18deg);border-color:transparent;filter:blur(7px)}to{opacity:1;transform:none;border-color:#ffffff1b;filter:blur(0)}}
-.initial-load .home-profile::after{content:'';position:absolute;inset:-30px -5%;z-index:-1;pointer-events:none;background:radial-gradient(ellipse at 25% 45%,#ec92a529,transparent 65%);animation:profile-light-enter 2.1s var(--ease-out) both}
-@keyframes profile-light-enter{0%{opacity:0;transform:translateX(-15%) scale(.6)}40%{opacity:1}100%{opacity:0;transform:translateX(20%) scale(1.2)}}
+.initial-load .home-profile::after{content:'';position:absolute;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(ellipse closest-side at 35% 45%,#ec92a529,transparent 100%);animation:profile-light-enter 2.1s var(--ease-out) both}
+@keyframes profile-light-enter{0%{opacity:0}40%{opacity:1}100%{opacity:0}}
 .reveal-ready .home-service{animation:service-unfold 1.1s var(--ease-out) both;animation-delay:calc(var(--order)*.15s)}
 @keyframes service-unfold{from{opacity:0;transform:perspective(1000px) translateY(65px) rotateX(12deg) scale(.96);filter:blur(6px)}to{opacity:1;transform:none;filter:blur(0)}}
 .reveal-ready .service-image img{animation:service-image-enter 1.2s var(--ease-out) both;animation-delay:calc(var(--order)*.15s)}
@@ -363,7 +363,6 @@ footer a{transition:color .4s var(--ease-out)}footer a:hover{color:var(--pink)}
 .header,footer{padding-inline:var(--page-gutter)}
 .page-shell::before{content:'';position:absolute;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(570px circle at var(--glow-x,50%) var(--glow-y,50%),#ec92a513,transparent 76%);opacity:0;transition:opacity .8s var(--ease-out)}
 .page-shell.is-lit::before{opacity:1}
-.initial-load .home-profile::after{inset:0}
 @media(prefers-reduced-motion:reduce){.page-shell.is-lit::before{opacity:0}}
 .page-shell.work-page{padding-bottom:64px}
 .work-x-section{position:relative;isolation:isolate;width:100%;margin:0;border-block:1px solid #ec92a535;background:linear-gradient(120deg,#ec92a50b,transparent)}
