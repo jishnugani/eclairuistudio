@@ -41,7 +41,7 @@ export default function Home({onOpen}) {
         {name:'Affinity',icon:'affinity',color:'#b6f379'},
         {name:'Adobe Photoshop',icon:'photoshop',color:'#31a8ff'},
         {name:'Roblox Studio',icon:'robloxstudio',color:'#39bdff'},
-      ].map((tool,index)=><li className="toolkit-item" key={tool.icon} style={{'--tool-color':tool.color,'--tool-order':index}}><div className="toolkit-card"><span className="toolkit-icon"><img src={`/tools/${tool.icon}.svg`} alt="" width="32" height="32"/></span><span>{tool.name}</span></div></li>)}</ul></section></aside></div>
+      ].map((tool,index)=><li className="toolkit-item" key={tool.icon} style={{'--tool-color':tool.color,'--tool-order':index}}><div className="toolkit-card"><span className="toolkit-icon"><img src={`/tools/${tool.icon}.${tool.icon==='affinity'?'png':'svg'}`} alt="" width="32" height="32"/></span><span>{tool.name}</span></div></li>)}</ul></section></aside></div>
     </section>
     <section className="home-section home-services"><div className="home-section-label">02 / SERVICES</div><div className="home-section-heading"><h2>Let’s talk about<br/>your project.</h2><Link href="/pricing" className="text-link">Pricing <ArrowUpRight size={18}/></Link></div><div className="service-gallery">{[
       {title:'Anime / Inventory',index:projects.findIndex(project=>project.src==='/work/01.jpeg'),description:'Character cards, stats, and equipment controls.'},
