@@ -389,6 +389,7 @@ footer a{transition:color .4s var(--ease-out)}footer a:hover{color:var(--pink)}
 .toolkit-card::before{content:'';position:absolute;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(ellipse at 0 50%,color-mix(in srgb,var(--tool-color) 15%,transparent),transparent 75%);opacity:0;transition:opacity .65s var(--ease-out)}
 .toolkit-icon{display:grid;place-items:center;width:48px;height:48px;flex-shrink:0;border-radius:11px;background:#ffffff06;border:1px solid #ffffff0a;transition:transform .65s var(--ease-out)}
 .toolkit-icon img{display:block;object-fit:contain}
+.toolkit-icon img[src="/tools/affinity.png"]{border-radius:20.3125%}
 @media(hover:hover){.toolkit-card:hover{transform:translateY(-3px);border-color:color-mix(in srgb,var(--tool-color) 40%,transparent);box-shadow:0 10px 30px #0003}.toolkit-card:hover::before{opacity:1}.toolkit-card:hover .toolkit-icon{transform:rotate(-6deg) scale(1.06)}}
 .initial-load .toolkit-heading{animation:opening-rise .9s .5s var(--ease-out) both}
 .initial-load .toolkit-item{animation:opening-rise 1s var(--ease-out) both;animation-delay:calc(.6s + var(--tool-order)*.12s)}
