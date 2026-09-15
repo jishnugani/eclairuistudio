@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { ArrowUpRight, ArrowRight, Star, Figma, Pause, Play } from 'lucide-react';
+import { ArrowUpRight, ArrowRight, Star, Pause, Play } from 'lucide-react';
 import { Link } from './navigation';
 import { projects, reviews } from './content';
 
@@ -36,7 +36,12 @@ export default function Home({onOpen}) {
   return <div className="home-story" ref={home}>
     <section className="home-section home-profile">
       <div className="home-section-label">01 / ABOUT ME</div>
-      <div className="home-profile-grid"><div><h1 className="profile-title" aria-label="I’m ec92a5">{Array.from('I’m ec92a5').map((letter,index)=><span aria-hidden="true" className="profile-letter-mask" key={index}><span style={{'--letter':index}}>{letter===' '?'\u00a0':letter}</span></span>)}</h1><p>Hi! I’m ec92a5! I have created UI for many happy clients over the past year, primarily using Figma. I can create any kind of UI, including menus, HUDs, etc. Just shoot me a DM, and I’ll let you know if what you're asking for is within my capabilities.</p><div className="profile-styles"><span>Cartoony</span><span>Anime</span><span>Retro</span><span>Minimal</span></div><Contact className="text-link">Contact on Discord <ArrowUpRight size={18}/></Contact></div><dl className="home-profile-facts"><div><dt>Experience</dt><dd>1+ <span>year</span></dd></div><div><dt>Age</dt><dd>18</dd></div><div><dt>Timezone</dt><dd>Pacific Time</dd></div><div><dt>Design tool</dt><dd><Figma size={23}/>Figma</dd></div></dl></div>
+      <div className="home-profile-grid"><div><h1 className="profile-title" aria-label="I’m ec92a5">{Array.from('I’m ec92a5').map((letter,index)=><span aria-hidden="true" className="profile-letter-mask" key={index}><span style={{'--letter':index}}>{letter===' '?'\u00a0':letter}</span></span>)}</h1><p>Hi! I’m ec92a5! I have created UI for many happy clients over the past year, primarily using Figma. I can create any kind of UI, including menus, HUDs, etc. Just shoot me a DM, and I’ll let you know if what you're asking for is within my capabilities.</p><div className="profile-styles"><span>Cartoony</span><span>Anime</span><span>Retro</span><span>Minimal</span></div><Contact className="text-link">Contact on Discord <ArrowUpRight size={18}/></Contact></div><aside className="profile-sidebar" aria-label="About me and toolkit"><dl className="home-profile-facts"><div><dt>Experience</dt><dd>1+ <span>year</span></dd></div><div><dt>Age</dt><dd>18</dd></div><div><dt>Timezone</dt><dd>Pacific Time</dd></div></dl><section className="profile-toolkit" aria-labelledby="toolkit-heading"><div className="toolkit-heading"><span aria-hidden="true">✦</span><h2 id="toolkit-heading">My toolkit</h2></div><ul className="toolkit-list">{[
+        {name:'Figma',icon:'figma',color:'#a259ff'},
+        {name:'Affinity',icon:'affinity',color:'#b6f379'},
+        {name:'Adobe Photoshop',icon:'photoshop',color:'#31a8ff'},
+        {name:'Roblox Studio',icon:'robloxstudio',color:'#39bdff'},
+      ].map((tool,index)=><li className="toolkit-item" key={tool.icon} style={{'--tool-color':tool.color,'--tool-order':index}}><div className="toolkit-card"><span className="toolkit-icon"><img src={`/tools/${tool.icon}.svg`} alt="" width="32" height="32"/></span><span>{tool.name}</span></div></li>)}</ul></section></aside></div>
     </section>
     <section className="home-section home-services"><div className="home-section-label">02 / SERVICES</div><div className="home-section-heading"><h2>Let’s talk about<br/>your project.</h2><Link href="/pricing" className="text-link">Pricing <ArrowUpRight size={18}/></Link></div><div className="service-gallery">{[
       {title:'Anime / Inventory',index:projects.findIndex(project=>project.src==='/work/01.jpeg'),description:'Character cards, stats, and equipment controls.'},
