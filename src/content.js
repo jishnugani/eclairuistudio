@@ -1,16 +1,14 @@
-// Add new work at the beginning. Work displays all; Home selects its featured images by filename.
+// Curated strongest-first order, not chronological. Use one cover per post.
+// Home selects its featured images by filename, independently of this order.
 export const projects = [
-  { category: 'STUD / ITEM STORE', src: '/work/11.jpeg', description: 'A cyan stud-textured item store with illustrated axes, rarity labels, power stats, and purchase buttons.' },
-  { category: 'STUD / HUD & SHOP', src: '/work/07.jpeg', description: 'A colorful simulator shop with lucky block offers, gamepasses, and matching navigation buttons.' },
-  { category: 'STUD / GIFTS', src: '/work/08.jpeg', description: 'A stud-style gifting menu with a player list and individual gift buttons.' },
-  { category: 'STUD / COLLECTION INDEX', src: '/work/09.jpeg', description: 'A simulator collection index with character cards, rarity labels, and collection progress.' },
-  { category: 'STUD / REBIRTH', src: '/work/10.jpeg', description: 'A simulator rebirth screen comparing money multipliers with cash progress and rebirth actions.' },
   { category: 'ANIME / INVENTORY', src: '/work/01.jpeg', description: 'An expressive unit inventory with character cards, rarity controls, stats, and equipment actions.' },
   { category: 'CARTOONY / INVENTORY', src: '/work/02.jpeg', description: 'A colorful pet inventory with clear rarity groups, search, and quick equipment controls.' },
-  { category: 'RETRO / SHOP', src: '/work/03.jpeg', description: 'A gamepass shop combining pixel typography, distinctive badges, and simple purchase options.' },
-  { category: 'CARTOONY / SHOP', src: '/work/04.jpeg', description: 'A bright, illustrated shop with high-contrast offers and bold, playful details.' },
-  { category: 'CARTOONY / HUD & SHOP', src: '/work/05.jpeg', description: 'A complete simulator interface bringing navigation, a store, and gameplay shortcuts into one visual system.' },
   { category: 'MINIMAL / MENU & HUD', src: '/work/06.png', description: 'A clean, angular menu system with player progression, daily tasks, and a focused visual hierarchy.' },
+  { category: 'CARTOONY / HUD & SHOP', src: '/work/05.jpeg', description: 'A complete simulator interface bringing navigation, a store, and gameplay shortcuts into one visual system.' },
+  { category: 'CARTOONY / SHOP', src: '/work/04.jpeg', description: 'A bright, illustrated shop with high-contrast offers and bold, playful details.' },
+  { category: 'STUD / HUD & SHOP', src: '/work/07.jpeg', description: 'A colorful simulator shop with lucky block offers, gamepasses, and matching navigation buttons.' },
+  { category: 'RETRO / SHOP', src: '/work/03.jpeg', description: 'A gamepass shop combining pixel typography, distinctive badges, and simple purchase options.' },
+  { category: 'STUD / ITEM STORE', src: '/work/11.jpeg', description: 'A cyan stud-textured item store with illustrated axes, rarity labels, power stats, and purchase buttons.' },
 ];
 
 export const terms = [
