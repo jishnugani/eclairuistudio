@@ -6,9 +6,9 @@ export const projects = [
   { category: 'MINIMAL / MENU & HUD', src: '/work/06.png', description: 'A clean, angular menu system with player progression, daily tasks, and a focused visual hierarchy.' },
   { category: 'CARTOONY / HUD & SHOP', src: '/work/05.jpeg', description: 'A complete simulator interface bringing navigation, a store, and gameplay shortcuts into one visual system.' },
   { category: 'CARTOONY / SHOP', src: '/work/04.jpeg', description: 'A bright, illustrated shop with high-contrast offers and bold, playful details.' },
-  { category: 'STUD / HUD & SHOP', src: '/work/07.jpeg', description: 'A colorful simulator shop with lucky block offers, gamepasses, and matching navigation buttons.' },
+  { category: 'CARTOONY / HUD & SHOP', src: '/work/07.jpeg', description: 'A colorful simulator shop with lucky block offers, gamepasses, and matching navigation buttons.' },
   { category: 'RETRO / SHOP', src: '/work/03.jpeg', description: 'A gamepass shop combining pixel typography, distinctive badges, and simple purchase options.' },
-  { category: 'STUD / ITEM STORE', src: '/work/11.jpeg', description: 'A cyan stud-textured item store with illustrated axes, rarity labels, power stats, and purchase buttons.' },
+  { category: 'CARTOONY / ITEM STORE', src: '/work/11.jpeg', description: 'A cyan cartoony item store with illustrated axes, rarity labels, power stats, and purchase buttons.' },
 ];
 
 export const terms = [
