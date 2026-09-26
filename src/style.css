@@ -411,3 +411,8 @@ footer a{transition:color .4s var(--ease-out)}footer a:hover{color:var(--pink)}
 .motion-managed .home-service,.motion-managed .work-card,.motion-managed .toolkit-item{backface-visibility:hidden}
 .motion-managed .work-card,.motion-managed .home-service{perspective:1100px}
 @media(prefers-reduced-motion:reduce){.anime-shutter{display:none}.motion-managed *{scroll-behavior:auto!important}}
+
+.motion-managed .profile-letter-mask{overflow:visible;perspective:none}
+.motion-managed .profile-letter-mask>span{transform:none}
+.motion-managed .profile-title{padding-block:.12em;margin-block:-.12em;overflow:visible}
+.motion-managed .home-section-heading,.motion-managed .home-contact-title{padding-block:6px}
