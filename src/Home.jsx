@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { ArrowUpRight, ArrowRight, Star, Pause, Play } from 'lucide-react';
+import { animate } from 'animejs';
 import { Link } from './navigation';
 import { projects, reviews } from './content';
 
@@ -8,31 +9,25 @@ const Contact = ({children,className=''}) => <a href="https://discord.gg/6H7RAbN
 export default function Home({onOpen}) {
   const home = useRef(null);
   const [reviewsPaused,setReviewsPaused] = useState(false);
-  useEffect(()=>{
-    const root = home.current;
-    const media = window.matchMedia('(prefers-reduced-motion: reduce)');
-    const elements = [...root.querySelectorAll('.home-services .home-section-label, .home-services .home-section-heading, .home-service, .home-service-bottom, .home-reviews .home-section-label, .home-reviews .home-section-heading, .testimonial-window, .home-contact .home-section-label, .home-contact-title, .home-contact-bottom')];
-    const show = element => {
-      element.classList.remove('scroll-waiting');
-      element.classList.add('scroll-visible');
+  const marquee = useRef(null);
+  useEffect(() => {
+    const track = home.current.querySelector('.testimonial-track');
+    const group = track.querySelector('.testimonial-group');
+    const motion = matchMedia('(prefers-reduced-motion: reduce)');
+    const desktop = matchMedia('(min-width: 701px)');
+    const setup = () => {
+      marquee.current?.revert(); marquee.current = null;
+      if (motion.matches || !desktop.matches) return;
+      const distance = group.getBoundingClientRect().width;
+      marquee.current = animate(track, { x: [0, -distance], duration: distance / 28 * 1000, ease: 'linear', loop: true });
+      if (home.current.querySelector('.reviews-paused')) marquee.current.pause();
     };
-    const observer = new IntersectionObserver(entries=>entries.forEach(entry=>{
-      if(entry.isIntersecting){show(entry.target);observer.unobserve(entry.target);}
-    }),{threshold:.12,rootMargin:'0px 0px -55px 0px'});
-    elements.forEach(element=>{
-      element.setAttribute('data-scroll-reveal','');
-      if(media.matches || element.getBoundingClientRect().bottom <= 0) return;
-      element.classList.add('scroll-waiting');
-      observer.observe(element);
-    });
-    const focused = event => {
-      const element=event.target.closest('[data-scroll-reveal]');
-      if(element){show(element);observer.unobserve(element);}
-    };
-    const preference = () => {if(media.matches){observer.disconnect();elements.forEach(element=>element.classList.remove('scroll-waiting','scroll-visible'));}};
-    root.addEventListener('focusin',focused);media.addEventListener('change',preference);
-    return ()=>{observer.disconnect();root.removeEventListener('focusin',focused);media.removeEventListener('change',preference);elements.forEach(element=>element.classList.remove('scroll-waiting','scroll-visible'));};
-  },[]);
+    const observer = new ResizeObserver(setup); observer.observe(group);
+    motion.addEventListener('change', setup); desktop.addEventListener('change', setup);
+    setup();
+    return () => { observer.disconnect(); motion.removeEventListener('change', setup); desktop.removeEventListener('change', setup); marquee.current?.revert(); };
+  }, []);
+  useEffect(() => { if (reviewsPaused) marquee.current?.pause(); else marquee.current?.play(); }, [reviewsPaused]);
   return <div className="home-story" ref={home}>
     <section className="home-section home-profile">
       <div className="home-section-label">01 / ABOUT ME</div>

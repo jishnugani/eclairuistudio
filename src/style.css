@@ -397,3 +397,17 @@ footer a{transition:color .4s var(--ease-out)}footer a:hover{color:var(--pink)}
 @media(max-width:760px){.home-profile-grid{grid-template-columns:minmax(0,1fr);gap:48px}.profile-sidebar{gap:28px}.home-profile h1{font-size:clamp(44px,10vw,76px)}.profile-sidebar .home-profile-facts dd{font-size:24px}.toolkit-list{grid-template-columns:repeat(2,minmax(0,1fr))}.toolkit-card{padding:12px;gap:12px;font-size:15px}}
 @media(max-width:460px){.toolkit-list{grid-template-columns:1fr}.toolkit-card{padding:12px 16px;font-size:16px}.profile-sidebar .home-profile-facts dd{font-size:20px}}
 @media(prefers-reduced-motion:reduce){.toolkit-card,.toolkit-icon,.toolkit-card::before{transition:none}.toolkit-card:hover,.toolkit-card:hover .toolkit-icon{transform:none}}
+
+/* Anime.js owns motion; CSS handles static layout and color transitions. */
+.route-page.leaving,.route-page.entering{animation:none}
+.anime-shutter i,.anime-shutter.leaving i,.anime-shutter.entering i{transition:none;transform:translateY(105%);border:0;background:linear-gradient(160deg,#362331,#19141c 65%);transform-origin:50% 50%}
+.anime-shutter i:nth-child(2n){background:linear-gradient(160deg,#4a2f3c,#211821 70%)}
+.anime-shutter.leaving,.anime-shutter.entering{visibility:visible}
+.motion-managed .testimonial-track{animation:none!important}
+.motion-managed .toolkit-card,.motion-managed .work-image,.motion-managed .service-image,.motion-managed .pill,.motion-managed .text-link,.motion-managed .work-x-arrow{transition-property:background-color,border-color,color,box-shadow;transform-style:preserve-3d}
+.motion-managed .toolkit-card:hover,.motion-managed .pill:hover,.motion-managed .work-image:hover,.motion-managed .service-image:hover,.motion-managed .work-x-link:hover .work-x-arrow{transform:none}
+.motion-managed .work-image:hover img{transform:none;filter:none}
+.motion-managed .faq-list details[open]>p{animation:none}
+.motion-managed .home-service,.motion-managed .work-card,.motion-managed .toolkit-item{backface-visibility:hidden}
+.motion-managed .work-card,.motion-managed .home-service{perspective:1100px}
+@media(prefers-reduced-motion:reduce){.anime-shutter{display:none}.motion-managed *{scroll-behavior:auto!important}}

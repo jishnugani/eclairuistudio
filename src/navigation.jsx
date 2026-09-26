@@ -1,5 +1,7 @@
 import { createContext, useCallback, useContext, useEffect, useRef, useState } from 'react';
 
+import { animate, stagger } from 'animejs';
+
 export const pageNames = {'/':'Home','/work':'Work','/process':'Process','/pricing':'Pricing','/faq':'FAQ','/terms':'Terms of Service'};
 const NavigationContext = createContext(null);
 const normalize = path => { const clean = path.replace(/\/$/, '') || '/'; return clean === '/about' ? '/' : clean; };
@@ -15,9 +17,12 @@ export function NavigationProvider({children}) {
   const [path,setPath] = useState(initialPath);
   const [phase,setPhase] = useState('idle');
   const current = useRef(path);
-  const timers = useRef([]);
+  const shutter = useRef(null);
+  const transitionAnimation = useRef(null);
+  const transitionId = useRef(0);
   const transition = useCallback((destination, scroll = 0) => {
-    timers.current.forEach(clearTimeout);
+    const id = ++transitionId.current;
+    transitionAnimation.current?.cancel();
     const commit = () => {
       current.current = destination;
       setPath(destination);
@@ -27,9 +32,21 @@ export function NavigationProvider({children}) {
         document.getElementById('page-content')?.focus({preventScroll:true});
       });
     };
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {commit();setPhase('idle');return;}
+    const panels = shutter.current.querySelectorAll('i');
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
+    if (reduce.matches) {commit();setPhase('idle');return;}
     setPhase('leaving');
-    timers.current = [setTimeout(() => {commit();setPhase('entering');},380),setTimeout(()=>setPhase('idle'),1050)];
+    transitionAnimation.current = animate(panels, {
+      y: ['105%', '0%'], rotateY: [-12, 0], duration: 420, delay: stagger(35), ease: 'inOutQuint',
+      onComplete: () => {
+        if (id !== transitionId.current) return;
+        commit(); setPhase('entering');
+        transitionAnimation.current = animate(panels, {
+          y: ['0%', '-105%'], rotateY: [0, 10], duration: 650, delay: stagger(45), ease: 'inOutQuint',
+          onComplete: () => { if (id === transitionId.current) setPhase('idle'); },
+        });
+      },
+    });
   },[]);
   const navigate = useCallback(destination => {
     destination = normalize(destination);
@@ -56,10 +73,10 @@ export function NavigationProvider({children}) {
     };
     window.addEventListener('popstate',pop);
     window.addEventListener('scroll',saveScroll,{passive:true});
-    return () => {window.removeEventListener('popstate',pop);window.removeEventListener('scroll',saveScroll);cancelAnimationFrame(scrollFrame);window.history.scrollRestoration=oldRestoration;timers.current.forEach(clearTimeout);};
+    return () => {window.removeEventListener('popstate',pop);window.removeEventListener('scroll',saveScroll);cancelAnimationFrame(scrollFrame);window.history.scrollRestoration=oldRestoration;transitionId.current++;transitionAnimation.current?.revert();};
   },[transition]);
   useEffect(() => {document.title = `${pageNames[path] || 'Page not found'} — ec92a5 UI Designer`;},[path]);
-  return <NavigationContext.Provider value={{path,navigate,phase}}>{children}<div className={`page-shutter ${phase}`} aria-hidden="true">{[0,1,2,3,4].map(i=><i key={i} style={{'--i':i}}/>)}</div></NavigationContext.Provider>;
+  return <NavigationContext.Provider value={{path,navigate,phase}}>{children}<div ref={shutter} className={`page-shutter anime-shutter ${phase}`} aria-hidden="true">{[0,1,2,3,4].map(i=><i key={i} style={{'--i':i}}/>)}</div></NavigationContext.Provider>;
 }
 export const useNavigation = () => useContext(NavigationContext);
 export function Link({href,children,onClick,...props}) {

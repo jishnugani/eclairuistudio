@@ -5,6 +5,8 @@ import { projects, terms, faqs } from './content';
 import { NavigationProvider, Link, useNavigation } from './navigation';
 import Home from './Home';
 import usePointerGlow from './usePointerGlow';
+import useMotion from './useMotion';
+import { animate, stagger } from 'animejs';
 import './style.css';
 
 const DISCORD = 'https://discord.gg/6H7RAbNn44';
@@ -21,6 +23,11 @@ function ImageViewer({view,setView}) {
     dialog.current.showModal();document.body.style.overflow='hidden';
     return () => {document.body.style.overflow=overflow;previous?.focus();};
   },[!!view]);
+  useEffect(() => {
+    if (!view || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const animation = animate(dialog.current.querySelector('.full-image'), { opacity: [0, 1], y: [14, 0], duration: 500, ease: 'outQuint' });
+    return () => animation.revert();
+  }, [view]);
   const step = direction => setView(current=>({...current,index:(current.index+direction+projects.length)%projects.length}));
   if(!view) return null;
   return <dialog ref={dialog} className="modal image-modal" aria-labelledby="viewer-title" onCancel={()=>setView(null)} onClick={e=>{if(e.target===e.currentTarget)setView(null);}} onKeyDown={e=>{if(project && ['ArrowLeft','ArrowRight'].includes(e.key)){e.preventDefault();step(e.key==='ArrowRight'?1:-1);}}}>
@@ -56,20 +63,20 @@ function Terms() {
 function App() {
   const {path,phase} = useNavigation();
   usePointerGlow(path);
+  useMotion(path);
   const [menu,setMenu] = useState(false);
-  const [opening,setOpening] = useState(true);
-  useEffect(()=>{
-    const timeout = setTimeout(()=>setOpening(false),2200);
-    return ()=>clearTimeout(timeout);
-  },[]);
-  useEffect(()=>{if(phase==='leaving')setOpening(false);},[phase]);
+  useEffect(() => {
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const animation = animate('.header .wordmark, .header .nav > a, .header .nav-cta', { opacity: [0, 1], y: [-12, 0], duration: 750, delay: stagger(55), ease: 'outQuint' });
+    return () => animation.revert();
+  }, []);
   const [view,setView] = useState(null);
   useEffect(()=>{setMenu(false);setView(null);},[path]);
   const pages = {'/':<Home onOpen={index=>setView({type:'work',index})}/>, '/work':<Work setView={setView}/>, '/process':<Process/>, '/pricing':<Pricing setView={setView}/>, '/faq':<FAQ/>, '/terms':<Terms/>};
   return <>
     <a className="skip" href="#page-content">Skip to content</a>
-    <header className={`header ${path==='/'?'home-header':''} ${opening?'initial-load':''}`}><Link href="/" className="wordmark" aria-label="ec92a5 home">ec92a5<span aria-hidden="true">✳</span></Link><nav className={menu?'nav open':'nav'} aria-label="Main navigation">{[['/','Home'],['/work','Work'],['/process','Process'],['/pricing','Pricing'],['/faq','FAQ'],['/terms','TOS']].map(([href,label])=><Link href={href} key={href} aria-current={path===href?'page':undefined} onClick={()=>setMenu(false)}>{label}</Link>)}</nav><External className="nav-cta">Commission <ArrowUpRight size={16}/></External><button className="menu-toggle" aria-label={menu?'Close navigation':'Open navigation'} aria-expanded={menu} onClick={()=>setMenu(!menu)}>{menu?<X/>:<Menu/>}</button></header>
-    <main id="page-content" tabIndex={-1} className={`route-page ${phase} ${opening?'initial-load':''}`} inert={phase==='leaving'} key={path}>{pages[path] || <div className="page-shell"><PageHeading title="Page not found"/><Link href="/work" className="pill primary">View work <ArrowRight size={18}/></Link></div>}</main>
+    <header className={`header ${path==='/'?'home-header':''}`}><Link href="/" className="wordmark" aria-label="ec92a5 home">ec92a5<span aria-hidden="true">✳</span></Link><nav className={menu?'nav open':'nav'} aria-label="Main navigation">{[['/','Home'],['/work','Work'],['/process','Process'],['/pricing','Pricing'],['/faq','FAQ'],['/terms','TOS']].map(([href,label])=><Link href={href} key={href} aria-current={path===href?'page':undefined} onClick={()=>setMenu(false)}>{label}</Link>)}</nav><External className="nav-cta">Commission <ArrowUpRight size={16}/></External><button className="menu-toggle" aria-label={menu?'Close navigation':'Open navigation'} aria-expanded={menu} onClick={()=>setMenu(!menu)}>{menu?<X/>:<Menu/>}</button></header>
+    <main id="page-content" tabIndex={-1} className={`route-page motion-managed ${phase}`} inert={phase==='leaving'} key={path}>{pages[path] || <div className="page-shell"><PageHeading title="Page not found"/><Link href="/work" className="pill primary">View work <ArrowRight size={18}/></Link></div>}</main>
     <footer><Link className="wordmark" href="/">ec92a5<span aria-hidden="true">✳</span></Link><p>© {new Date().getFullYear()} ec92a5</p><Link href="/terms" className="footer-terms">Terms of Service</Link><External href="https://x.com/ec92a5">X <ArrowUpRight size={16}/></External><External>Discord <ArrowUpRight size={16}/></External></footer>
     <ImageViewer view={view} setView={setView}/>
   </>;
